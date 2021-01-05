@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Github resume parser{% endblock %}
+
+{% block body %}
+        <main class="container">
+                <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+                {{ form(form) }}
+                </div>
+
+        {% if result is not empty %}
+
+                <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+                        <h1 class="display-4"> {{ result.name }}</h1>
+                        <p class="lead">User have {{ result.public_repos }} repositories, {{ result.followers }} followes and follow {{ result.following }} users</p>
+                        {% if result.blog is not empty %}
+                                Website: <a href="{{ result.blog }}" target="_blank">{{ result.blog }}</a>
+                        {% endif %}
+                </div>
+
+                <h3>Languages <small>(based on owned public repos only)</small></h3>
+                <ul>
+                {% for language in result.language_list %}
+                        <li>{{ language.name }}: {{ language.percentage }}%</li>
+                {% endfor %}
+                </ul>
+                <h3>Repos</h3>
+
+                {% for repo in result.repo_list %}
+                        <h2 class="card-title pricing-card-title">{{ repo.name }}</h2>
+                        <p>
+                                {{ repo.description }}
+                        </p>
+                        <a href="{{ repo.link }}" target="_blank">Open repo</a>
+                {% endfor %}
+        {% endif %}
+
+        </main>
+
+
+
+
+
+
+
+
+{% endblock %}
